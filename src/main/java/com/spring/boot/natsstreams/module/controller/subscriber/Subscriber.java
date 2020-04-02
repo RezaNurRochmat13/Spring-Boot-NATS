@@ -2,7 +2,6 @@ package com.spring.boot.natsstreams.module.controller.subscriber;
 
 import com.spring.boot.natsstreams.module.configuration.NatsConfiguration;
 import io.nats.client.Message;
-import io.nats.client.Subscription;
 import io.nats.client.SyncSubscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
