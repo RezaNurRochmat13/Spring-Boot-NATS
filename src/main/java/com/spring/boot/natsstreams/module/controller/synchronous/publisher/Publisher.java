@@ -22,7 +22,7 @@ public class Publisher {
     @ResponseStatus(HttpStatus.OK)
     public Map<String, Object> publishMessages() throws IOException, InterruptedException {
         Map<String, Object> map = new HashMap<>();
-        String messages = "Order Data";
+        String messages = "Data Order Baru";
         natsConfiguration
                 .setupNatsConnection()
                 .publish("orders", messages.getBytes());

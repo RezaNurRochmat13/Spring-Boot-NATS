@@ -2,41 +2,30 @@ package com.spring.boot.natsstreams.module.controller.asynchronous.subscriber;
 
 import com.spring.boot.natsstreams.module.configuration.NatsConfiguration;
 import io.nats.client.Dispatcher;
+import io.nats.client.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CountDownLatch;
 
 @RestController
-@RequestMapping("api")
 public class AsyncSubscriber {
 
     @Autowired
     private NatsConfiguration natsConfiguration;
 
     @Scheduled(fixedRate = 5000)
-    public void asyncSubscription() {
-        CountDownLatch latch = new CountDownLatch(1);
-        try {
-            Dispatcher dispatcher = natsConfiguration
-                    .setupNatsConnection()
-                    .createDispatcher((message -> {
-                        String msg = new String(message.getData());
-                        System.out.println("Receiving Messages Asynchronously : " + msg);
-                        latch.countDown();
-                    }));
-
-            dispatcher.subscribe("orders");
-            dispatcher.unsubscribe("orders");
-            latch.wait();
-            natsConfiguration.setupNatsConnection().close();
-        } catch (Exception err) {
-            System.out.println("Error catched : " + err.getMessage());
-        }
-
-
+    public void asyncSubscription() throws IOException, InterruptedException {
+        Dispatcher dispatcher = natsConfiguration
+                .setupNatsConnection()
+                .createDispatcher((msg) -> {});
+        Subscription subscription = dispatcher.subscribe("orders", (msg) -> {
+            String response = new String(msg.getData(), StandardCharsets.UTF_8);
+            System.out.println("Receiving Message Asynchronously : " + response);
+        });
+        dispatcher.unsubscribe(subscription, 100);
     }
 }
