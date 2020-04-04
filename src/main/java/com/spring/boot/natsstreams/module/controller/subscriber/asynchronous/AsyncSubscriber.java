@@ -1,4 +1,4 @@
-package com.spring.boot.natsstreams.module.controller.asynchronous.subscriber;
+package com.spring.boot.natsstreams.module.controller.subscriber.asynchronous;
 
 import com.spring.boot.natsstreams.module.configuration.NatsConfiguration;
 import io.nats.client.Dispatcher;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.CountDownLatch;
 
 @RestController
 public class AsyncSubscriber {
@@ -26,6 +25,6 @@ public class AsyncSubscriber {
             String response = new String(msg.getData(), StandardCharsets.UTF_8);
             System.out.println("Receiving Message Asynchronously : " + response);
         });
-        dispatcher.unsubscribe(subscription, 100);
+        dispatcher.unsubscribe(subscription, 1);
     }
 }

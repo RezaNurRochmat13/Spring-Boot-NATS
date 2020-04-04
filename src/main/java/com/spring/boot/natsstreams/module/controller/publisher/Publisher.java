@@ -1,4 +1,4 @@
-package com.spring.boot.natsstreams.module.controller.synchronous.publisher;
+package com.spring.boot.natsstreams.module.controller.publisher;
 
 import com.spring.boot.natsstreams.module.configuration.NatsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
